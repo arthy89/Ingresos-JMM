@@ -15,6 +15,7 @@ use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\ReciboController;
 use App\Http\Controllers\ShakedownController;
 use App\Http\Controllers\TiempoController;
 use App\Http\Controllers\TripulacionController;
@@ -80,3 +81,4 @@ use App\Http\Controllers\UbigeoController;
 
 Route::apiResource('/conceptos', ConceptoController::class)->middleware([HandlePrecognitiveRequests::class]);
 Route::apiResource('/estudiantes', EstudianteController::class)->middleware([HandlePrecognitiveRequests::class]);
+Route::apiResource('/recibos', ReciboController::class)->middleware([HandlePrecognitiveRequests::class]);

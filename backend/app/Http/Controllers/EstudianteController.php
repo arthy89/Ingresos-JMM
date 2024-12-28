@@ -13,9 +13,11 @@ class EstudianteController extends Controller
      */
     public function index(Request $request)
     {
+        $query = Estudiante::with(['recibos']);
+        
         return $this->generateViewSetList(
             $request,
-            Estudiante::query(),
+            $query,
             [],
             ['dni', 'nombre'],
             ['id', 'nombre']

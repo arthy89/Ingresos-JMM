@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class EstudianteRequest extends FormRequest
+class ReciboRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,16 +21,18 @@ class EstudianteRequest extends FormRequest
      */
     public function rules(): array
     {
-        // Obtiene el id de la ruta y se ignora al actualizar
-        $estudianteId = $this->route('estudiante')?->id;
-
         return [
-            'dni' => [
-                'required',
-                'digits:8',
-                Rule::unique('estudiantes', 'dni')->ignore($estudianteId),
-            ],
-            'nombre' => 'required',
+            'estudiante_id' => 'nullable',
+            'num' => 'nullable',
+            'senor' => 'required',
+            'total' => 'required',
+            'comentarios' => 'nullable',
+
+            // Items
+            'items' => 'array|nullable',
+            'items.*.concepto_id' => 'required|integer',
+            'items.*.cantidad' => 'required|integer',
+            'items.*.importe' => 'required',
         ];
     }
 }

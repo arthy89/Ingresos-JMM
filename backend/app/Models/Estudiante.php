@@ -10,4 +10,10 @@ class Estudiante extends Model
     use HasFactory;
 
     protected $fillable = ['dni', 'nombre'];
+    // protected $with = ['recibos'];
+
+    public function recibos()
+    {
+        return $this->hasMany(Recibo::class);
+    }
 }

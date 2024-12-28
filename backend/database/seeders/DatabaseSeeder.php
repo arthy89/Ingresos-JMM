@@ -21,6 +21,11 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        $this->call([ClientTokenSeeder::class, PermisoSeeder::class, UbigeoSeeder::class, OrgSeeder::class, ConductoresSeeder::class]);
+        $this->call([
+            ClientTokenSeeder::class,
+            PermisoSeeder::class, 
+            // UbigeoSeeder::class,
+            ConceptosSeeder::class,
+        ]);
     }
 }
