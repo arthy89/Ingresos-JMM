@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('estudiante_id')->constrained()->onDelete('cascade');
             $table->bigInteger('num');
+            $table->date('fecha');
             $table->string('senor');
             $table->decimal('total', 10, 2);
             $table->longText('comentarios')->nullable();

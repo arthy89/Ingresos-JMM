@@ -12,6 +12,7 @@ class Recibo extends Model
     protected $fillable = [
         'estudiante_id',
         'num',
+        'fecha',
         'senor',
         'total',
         'comentarios',

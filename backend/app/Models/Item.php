@@ -11,15 +11,9 @@ class Item extends Model
 
     protected $fillable = [
         'recibo_id',
-        'concepto_id',
+        'concepto',
         'cantidad',
+        'precio',
         'importe',
     ];
-
-    protected $with = ['concepto'];
-
-    public function concepto()
-    {
-        return $this->belongsTo(Concepto::class);
-    }
 }

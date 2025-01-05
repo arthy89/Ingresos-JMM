@@ -23,16 +23,23 @@ class ReciboRequest extends FormRequest
     {
         return [
             'estudiante_id' => 'nullable',
-            'num' => 'nullable',
+            // 'num' => 'nullable',
+            'fecha' => 'required',
             'senor' => 'required',
             'total' => 'required',
             'comentarios' => 'nullable',
 
             // Items
             'items' => 'array|nullable',
-            'items.*.concepto_id' => 'required|integer',
+            'items.*.concepto' => 'required',
             'items.*.cantidad' => 'required|integer',
+            'items.*.precio' => 'required',
             'items.*.importe' => 'required',
+
+            // Estudiante
+            'estudiante' => 'array|required',
+            'estudiante.dni' => 'required|max:8',
+            'estudiante.nombre' => 'required',
         ];
     }
 }

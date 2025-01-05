@@ -81,4 +81,5 @@ use App\Http\Controllers\UbigeoController;
 
 Route::apiResource('/conceptos', ConceptoController::class)->middleware([HandlePrecognitiveRequests::class]);
 Route::apiResource('/estudiantes', EstudianteController::class)->middleware([HandlePrecognitiveRequests::class]);
+Route::get('/estudiantes/dni/{dni}', [EstudianteController::class, 'show_dni'])->middleware([HandlePrecognitiveRequests::class]);
 Route::apiResource('/recibos', ReciboController::class)->middleware([HandlePrecognitiveRequests::class]);

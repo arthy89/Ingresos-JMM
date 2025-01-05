@@ -1,29 +1,29 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "Next.js + NextUI",
+  name: "Ingresos JMM",
   description: "Make beautiful websites regardless of your design experience.",
   navItems: [
     {
-      label: "Home",
+      label: "Inicio",
       href: "/",
     },
     {
-      label: "Docs",
-      href: "/docs",
+      label: "Recibos",
+      href: "/recibos",
     },
     {
-      label: "Pricing",
-      href: "/pricing",
+      label: "Estudiantes",
+      href: "/estudiantes",
     },
     {
-      label: "Blog",
-      href: "/blog",
+      label: "Administración",
+      href: "/admin",
     },
-    {
-      label: "About",
-      href: "/about",
-    },
+    // {
+    //   label: "About",
+    //   href: "/about",
+    // },
   ],
   navMenuItems: [
     {

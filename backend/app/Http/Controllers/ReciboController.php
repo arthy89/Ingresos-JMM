@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReciboRequest;
+use App\Models\Estudiante;
 use App\Models\Recibo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,17 +17,16 @@ class ReciboController extends Controller
     {
         $query = Recibo::with(['estudiante']);
 
-        return $this->generateViewSetList(
+        return $this->newGenerateViewSetList(
             $request,
             $query,
-            [],
+            ['fecha'],
             [
                 'num',
                 'senor',
                 'estudiante.dni',
                 'estudiante.nombre'
             ],
-            [],
             ['id', 'num']
         );
     }
@@ -39,13 +39,9 @@ class ReciboController extends Controller
         DB::beginTransaction();
 
         try {
-            // $recibo_r = $request->all();
-            $ultimo_recibo = Recibo::latest()->first();
-
-            if ($ultimo_recibo) {
-                $request['num'] = $ultimo_recibo->num + 1;
-            } else {
-                $request['num'] = 1;
+            if (!$request->estudiante_id) {
+                $estudiante = Estudiante::create($request->estudiante);
+                $request->merge(['estudiante_id' => $estudiante->id]);
             }
 
             $recibo = Recibo::create($request->all());
@@ -76,6 +72,8 @@ class ReciboController extends Controller
     public function show(Recibo $recibo)
     {
         if ($recibo) {
+            $recibo->load(['estudiante']);
+            
             return response()->json([
                 'recibo' => $recibo,
                 'message' => 'Recibo encontrado'
@@ -95,6 +93,11 @@ class ReciboController extends Controller
         DB::beginTransaction();
 
         try {
+            if (!$request->estudiante_id) {
+                $estudiante = Estudiante::create($request->estudiante);
+                $request->merge(['estudiante_id' => $estudiante->id]);
+            }
+
             $recibo->update($request->all());
 
             if ($request->items) {

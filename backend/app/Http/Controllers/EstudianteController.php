@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EstudianteRequest;
 use App\Models\Estudiante;
+use App\Models\Recibo;
 use Illuminate\Http\Request;
 
 class EstudianteController extends Controller
@@ -44,6 +45,29 @@ class EstudianteController extends Controller
         if ($estudiante) {
             return response()->json([
                 'estudiante' => $estudiante,
+                'message' => 'Estudiante encontrado'
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'El Estudiante no fue encontrado'
+            ], 404);
+        }
+    }
+
+    public function show_dni($dni)
+    {
+        // Buscar al estudiante y encontrar coincidencias con Certificado de Estudios
+        $est = Estudiante::where('dni', $dni)->first();
+        $crt = Recibo::where('estudiante_id', $est->id)
+                ->whereHas('items', function ($query) {
+                    $query->whereRaw('LOWER(concepto) LIKE ?', ['%certificado de estudios%']);
+                })
+                ->exists();
+        
+        if ($est) {
+            return response()->json([
+                'estudiante' => $est,
+                'certificado' => $crt,
                 'message' => 'Estudiante encontrado'
             ], 200);
         } else {
