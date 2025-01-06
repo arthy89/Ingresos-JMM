@@ -23,13 +23,16 @@ function Eliminar({ datos, isOpen, onOpenChange, delReg }) {
 
                   <ModalBody>
                     <p>
-                      ¿Seguro de eliminar el Recibo{" "}
-                      <strong>Nº {String(datos.num).padStart(6, 0)}</strong>?
+                      ¿Seguro de eliminar{" "}
+                      {datos.num
+                        ? <span>el Recibo <strong>Nº {String(datos.num).padStart(6, 0)}</strong></span>
+                        : <span>al estudiante <strong>{datos.nombre}</strong></span>
+                      }
                     </p>
                   </ModalBody>
 
                   <ModalFooter>
-                    <Button color="primary" variant="light" onPress={onClose}>
+                    <Button color="primary" variant="flat" onPress={onClose}>
                       Cancelar
                     </Button>
                     <Button

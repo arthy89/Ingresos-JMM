@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ReciboRequest extends FormRequest
 {
@@ -21,6 +22,9 @@ class ReciboRequest extends FormRequest
      */
     public function rules(): array
     {
+        // Obtén el ID del estudiante desde el payload si existe
+        $estudianteId = $this->input('estudiante_id');
+
         return [
             'estudiante_id' => 'nullable',
             // 'num' => 'nullable',
@@ -38,7 +42,11 @@ class ReciboRequest extends FormRequest
 
             // Estudiante
             'estudiante' => 'array|required',
-            'estudiante.dni' => 'required|max:8',
+            'estudiante.dni' => [
+                'required',
+                'digits:8',
+                Rule::unique('estudiantes', 'dni')->ignore($estudianteId),
+            ],
             'estudiante.nombre' => 'required',
         ];
     }

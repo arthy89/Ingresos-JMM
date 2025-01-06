@@ -21,10 +21,11 @@ import {
 import { PiPencilSimpleFill } from "react-icons/pi";
 import { BsTrash2Fill } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
+import { FaEye } from "react-icons/fa6";
 import { columns } from './columns';
 
-function ReciboTable({
-  recibos,
+function EstuTable({
+  data,
   mutate,
   isLoading,
   page,
@@ -33,30 +34,24 @@ function ReciboTable({
   setRowPerPage,
   search,
   setSearch,
-  fecha,
-  setFecha,
   editar,
   setEdit,
   onOpen,
   eliminar,
+  ver,
 }) {
-  // console.log('DATOS RECIBIDOS', recibos);
+
+  // console.log("DATOS: ", data?.data);
 
   const handleSearch = (value) => {
     setSearch(value);
   };
 
-  const handleFecha = (value) => {
-    setFecha(value);
-  }
-
   const pages = useMemo(() => {
-    return recibos?.last_page;
-  }, [recibos?.total, rowPerPage]);
+    return data?.last_page;
+  }, [data?.total, rowPerPage]);
 
-  const loadingState = isLoading || recibos?.data.legth === 0 ? "loading" : "idle";
-  // const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  // const refForm = useRef(null);
+  const loadingState = isLoading || data?.data.legth === 0 ? "loading" : "idle";
 
   const topContent = useMemo(() => {
     return (
@@ -65,17 +60,17 @@ function ReciboTable({
           <Input
             className='w-full sm:max-w-[44%]'
             label="Buscador"
-            placeholder='Nombres | DNI | Num'
+            placeholder='Nombres | DNI'
             startContent={<CiSearch size="1.4em" />}
             defaultValue={search}
             onChange={(e) => handleSearch(e.target.value)}
           />
 
-          <DatePicker
+          {/* <DatePicker
             className="max-w-[284px]" 
             label="Por Fecha"
             onChange={(e) => handleFecha(e.year + "-" + e.month + "-" + e.day)}
-          />
+          /> */}
 
           <div className="flex gap-3">
             <Button
@@ -88,14 +83,12 @@ function ReciboTable({
             >
               Añadir
             </Button>
-
-            {/* AQUI EL MODAL */}
           </div>
         </div>
 
         <div className="flex items-center justify-between">
           <span className="text-default-400 text-small">
-            Total {recibos?.total} Recibos
+            Total {data?.total} Estudiantes
           </span>
 
           <label className="flex items-center text-default-400 text-small">
@@ -115,8 +108,8 @@ function ReciboTable({
           </label>
         </div>
       </div>
-    );
-  }, [rowPerPage, recibos?.total]);
+    )
+  }, [rowPerPage, data?.total]);
 
   const renderCell = useCallback((row, columnKey, index) => {
     const cellValue = row[columnKey];
@@ -124,35 +117,12 @@ function ReciboTable({
     switch (columnKey) {
       case "id":
         return <p>{index !== undefined && index !== null ? index + 1 : '-'}</p>;
-      
-      case "num":
-        const num = String(row.num).padStart(6, 0);
-        return <p>{num}</p>
 
       case "dni":
-        return <p>{row.estudiante.dni}</p>
+        return <p className=''>{row.dni}</p>
 
-      case "estudiante":
-        return (
-          <>
-            <p>{row.estudiante.nombre}</p>
-            <p className='text-xs italic font-light'>Sr(a): {row.senor}</p>
-          </>
-        );
-      
-      case "items":
-        return (
-          <ul className="list-disc">
-            {row.items.map((item) => (
-              <li key={item.id}>
-                {item.concepto}
-              </li>
-            ))}
-          </ul>
-        );
-
-      case "total":
-        return <p>S/. {row.total}</p>
+      case "recibos":
+        return <p className='font-bold'>{row.recibos.length}</p>
       
       case "acciones":
         return (
@@ -168,12 +138,21 @@ function ReciboTable({
             </Button>
 
             <Button
+              onPress={() => ver(row)}
+              size='sm'
+              color='success'
+              isIconOnly 
+            >
+              <FaEye size="1.6em" />
+            </Button>
+
+            <Button
               onPress={() => eliminar(row)}
               size='sm'
               color='danger'
               isIconOnly 
             >
-              <BsTrash2Fill  size="1.6em" />
+              <BsTrash2Fill size="1.6em" />
             </Button>
           </div>
         );
@@ -184,9 +163,10 @@ function ReciboTable({
 
   return (
     <>
-      <span className='text-2xl font-bold'>Recibos</span>
+      <span className='text-2xl font-bold'>Estudiantes</span>
+
       <Table
-        aria-label="Tabla de Recibos"
+        aria-label="Tabla de Estudiantes"
         topContent={topContent}
         isStriped
         bottomContent={
@@ -220,7 +200,7 @@ function ReciboTable({
           loadingContent={<Spinner />}
           loadingState={loadingState}
         >
-          {recibos?.data?.map((item, index) => (
+          {data?.data?.map((item, index) => (
             <TableRow key={item?.id}>
               {(columnKey) => (
                 <TableCell>
@@ -235,4 +215,4 @@ function ReciboTable({
   )
 }
 
-export default ReciboTable
+export default EstuTable

@@ -9,7 +9,7 @@ import {
   Divider
 } from "@nextui-org/react";
 import toast, { Toaster } from "react-hot-toast";
-import { IoSaveOutline } from "react-icons/io5";
+import { FaSave } from "react-icons/fa";
 import { FaSearch, FaPlus  } from "react-icons/fa";
 import { useForm } from 'laravel-precognition-react';
 import { formData } from './formData';
@@ -17,7 +17,7 @@ import Items from './Items';
 import ReciboService from '@/services/ReciboServices';
 import EstudianteService from '@/services/EstudianteServices';
 
-const Form = forwardRef(({ save, isEdit, id, onClose, ult, conceptos }, ref) => {
+const Form = forwardRef(({ save, isEdit, id, onClose, ult, conceptos, est_data }, ref) => {
   useEffect(() => {
     if (!isEdit) {
       form.setData("num", ult.num + 1);
@@ -105,6 +105,17 @@ const Form = forwardRef(({ save, isEdit, id, onClose, ult, conceptos }, ref) => 
     setInputs(true);
   };
 
+  // ? Comprobar si se tiene Estudiante por Parametros
+  useEffect(() => {
+    if (est_data) {
+      // console.log("viene de parametros!!!!!!!!", est_data);
+      form.setData("estudiante_id", est_data.estudiante.id);
+      form.setData("estudiante.dni", est_data.estudiante.dni);
+      form.setData("estudiante.nombre", est_data.estudiante.nombre);
+      setIsDis(true);
+    }
+  }, []);
+
   // console.log('ULT', ult);
   // console.log('CONCEPTOS', conceptos);
 
@@ -120,7 +131,7 @@ const Form = forwardRef(({ save, isEdit, id, onClose, ult, conceptos }, ref) => 
       });
     }
   };
-  
+
   return (
     <>
       <form ref={ref} onSubmit={onSave} className='flex flex-col gap-2'>
@@ -129,7 +140,7 @@ const Form = forwardRef(({ save, isEdit, id, onClose, ult, conceptos }, ref) => 
         </ModalHeader>
 
         <ModalBody>
-          <div className='grid items-end grid-cols-2 gap-4'>
+          <div className='grid items-start grid-cols-2 gap-4'>
             <Input
               label="DNI"
               placeholder='DNI del Estudiante'
@@ -142,15 +153,20 @@ const Form = forwardRef(({ save, isEdit, id, onClose, ult, conceptos }, ref) => 
               onValueChange={(e) => form.setData("estudiante.dni", e)}
               onBlur={() => form.validate("estudiante.dni")}
               isInvalid={form.invalid("estudiante.dni")}
+              errorMessage={form.errors["estudiante.dni"]}
             />
             
-            <Button
-              color='primary'
-              startContent={<FaSearch />}
-              onPress={buscar_est}
-            >
-              Buscar
-            </Button>
+            {/* Mostrar solo si no se pasa al est_data como parametro */}
+            {!est_data && (
+              <Button
+                className='h-full'
+                color='primary'
+                startContent={<FaSearch />}
+                onPress={buscar_est}
+              >
+                Buscar
+              </Button>
+            )}
           </div>
 
           <Input
@@ -214,7 +230,7 @@ const Form = forwardRef(({ save, isEdit, id, onClose, ult, conceptos }, ref) => 
           <Items
             form={form}
             conceptos={conceptos}
-            certificado={est_found_ref.current?.certificado}
+            certificado={est_found_ref.current?.certificado || est_data?.certificado}
           />
 
           <Textarea 
@@ -243,7 +259,7 @@ const Form = forwardRef(({ save, isEdit, id, onClose, ult, conceptos }, ref) => 
           <Button
             color='success'
             type='submit'
-            endContent={<IoSaveOutline />}
+            endContent={<FaSave size="1.4em" />}
           >
             Guardar
           </Button>

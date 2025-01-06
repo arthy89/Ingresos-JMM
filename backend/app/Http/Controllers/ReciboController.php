@@ -20,7 +20,7 @@ class ReciboController extends Controller
         return $this->newGenerateViewSetList(
             $request,
             $query,
-            ['fecha'],
+            ['fecha', 'estudiante_id'],
             [
                 'num',
                 'senor',

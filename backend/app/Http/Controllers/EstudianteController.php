@@ -42,9 +42,17 @@ class EstudianteController extends Controller
      */
     public function show(Estudiante $estudiante)
     {
+        // Buscar al estudiante y encontrar coincidencias con Certificado de Estudios
+        $crt = Recibo::where('estudiante_id', $estudiante->id)
+                ->whereHas('items', function ($query) {
+                    $query->whereRaw('LOWER(concepto) LIKE ?', ['%certificado de estudios%']);
+                })
+                ->exists();
+
         if ($estudiante) {
             return response()->json([
                 'estudiante' => $estudiante,
+                'certificado' => $crt,
                 'message' => 'Estudiante encontrado'
             ], 200);
         } else {
