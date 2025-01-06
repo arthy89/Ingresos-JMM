@@ -135,13 +135,14 @@ function Items({ form, conceptos, certificado }) {
       <div className='grid items-end grid-cols-3 gap-4'>
         <Input
           label="Precio U."
-          placeholder='S/.'
+          placeholder='S/. ...'
           size='sm'
-          isReadOnly
+          // isReadOnly
           labelPlacement='outside'
           type='number'
           variant='bordered'
           value={item.precio}
+          onChange={(e) => setItem({ ...item, ["precio"]: e.target.value })}
         />
 
         <Input
