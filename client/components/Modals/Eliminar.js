@@ -26,7 +26,7 @@ function Eliminar({ datos, isOpen, onOpenChange, delReg }) {
                       ¿Seguro de eliminar{" "}
                       {datos.num
                         ? <span>el Recibo <strong>Nº {String(datos.num).padStart(6, 0)}</strong></span>
-                        : <span>al estudiante <strong>{datos.nombre}</strong></span>
+                        : <span><strong>{datos.nombre}</strong></span>
                       }
                     </p>
                   </ModalBody>

@@ -17,6 +17,17 @@ class ConceptoController extends Controller
         return $conceptos;
     }
 
+    public function index_all(Request $request)
+    {
+        return $this->generateViewSetList(
+            $request,
+            Concepto::query(),
+            [],
+            ['nombre'],
+            ['id']
+        );
+    }
+
     /**
      * Store a newly created resource in storage.
      */
