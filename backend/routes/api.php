@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ConceptoController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\EspecialController;
+use App\Http\Controllers\EstadisticasController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\EtapaController;
 use App\Http\Controllers\EventController;
@@ -84,3 +85,4 @@ Route::get('/conceptos_all', [ConceptoController::class, 'index_all'])->middlewa
 Route::apiResource('/estudiantes', EstudianteController::class)->middleware([HandlePrecognitiveRequests::class]);
 Route::get('/estudiantes/dni/{dni}', [EstudianteController::class, 'show_dni'])->middleware([HandlePrecognitiveRequests::class]);
 Route::apiResource('/recibos', ReciboController::class)->middleware([HandlePrecognitiveRequests::class]);
+Route::get('/estadisticas', [EstadisticasController::class, 'index']);
