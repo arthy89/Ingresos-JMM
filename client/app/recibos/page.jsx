@@ -1,24 +1,20 @@
 "use client";
-import { useRef, useState, useMemo, useCallback, useEffect } from 'react'
-import { 
-  useDisclosure,
-  Modal,
-  ModalContent, 
-} from '@nextui-org/react';
-import ReciboTable from '@/components/Recibos/ReciboTable';
-import ReciboService from '@/services/ReciboServices';
-import ConceptoService from '@/services/ConceptoService';
-import Eliminar from '@/components/Modals/Eliminar';
-import Form from '@/components/Recibos/form';
+import { useRef, useState, useMemo, useCallback, useEffect } from "react";
+import { useDisclosure, Modal, ModalContent } from "@nextui-org/react";
+import ReciboTable from "@/components/Recibos/ReciboTable";
+import ReciboService from "@/services/ReciboServices";
+import ConceptoService from "@/services/ConceptoService";
+import Eliminar from "@/components/Modals/Eliminar";
+import Form from "@/components/Recibos/form";
 import toast, { Toaster } from "react-hot-toast";
 
-function page() {
+function Page() {
   const conceptosRef = useRef(null);
 
   const [page, setPage] = useState(1);
   const [rowPerPage, setRowPerPage] = useState(5);
-  const [search, setSearch] = useState("");	
-  const [fecha, setFecha] = useState(null);	
+  const [search, setSearch] = useState("");
+  const [fecha, setFecha] = useState(null);
 
   const { data, mutate, isLoading } = ReciboService.getData({
     page,
@@ -78,7 +74,7 @@ function page() {
 
   return (
     <>
-      <ReciboTable 
+      <ReciboTable
         recibos={data}
         mutate={mutate}
         isLoading={isLoading}
@@ -97,14 +93,14 @@ function page() {
       />
 
       {/* MODALES */}
-      
+
       {/* FORM */}
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         placement="center"
         scrollBehavior="outside"
-        size='lg'
+        size="lg"
       >
         <ModalContent>
           {(onClose) => (
@@ -132,7 +128,7 @@ function page() {
         onClose={onClose}
       />
     </>
-  )
+  );
 }
 
-export default page
+export default Page;

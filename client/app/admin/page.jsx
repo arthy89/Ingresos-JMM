@@ -1,16 +1,12 @@
 "use client";
-import { useRef, useState, useEffect } from 'react';
-import { 
-  useDisclosure,
-  Modal,
-  ModalContent, 
-} from '@nextui-org/react';
-import ConceptoService from '@/services/ConceptoService';
-import ConcepsTable from '@/components/Conceptos/ConcepsTable';
-import Eliminar from '@/components/Modals/Eliminar';
-import Form from '@/components/Conceptos/form';
+import { useRef, useState } from "react";
+import { useDisclosure, Modal, ModalContent } from "@nextui-org/react";
+import ConceptoService from "@/services/ConceptoService";
+import ConcepsTable from "@/components/Conceptos/ConcepsTable";
+import Eliminar from "@/components/Modals/Eliminar";
+import Form from "@/components/Conceptos/form";
 
-function page() {
+function Page() {
   const [page, setPage] = useState(1);
   const [rowPerPage, setRowPerPage] = useState(20);
   const [search, setSearch] = useState("");
@@ -64,7 +60,7 @@ function page() {
 
   return (
     <>
-      <ConcepsTable 
+      <ConcepsTable
         data={data}
         mutate={mutate}
         isLoading={isLoading}
@@ -81,14 +77,14 @@ function page() {
       />
 
       {/* MODALES */}
-      
+
       {/* FORM */}
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         placement="center"
         scrollBehavior="outside"
-        size='lg'
+        size="lg"
       >
         <ModalContent>
           {(onClose) => (
@@ -114,7 +110,7 @@ function page() {
         onClose={onClose}
       />
     </>
-  )
+  );
 }
 
-export default page
+export default Page;

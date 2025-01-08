@@ -1,5 +1,5 @@
-import { useRef, useMemo, useCallback } from 'react'
-import { 
+import { useRef, useMemo, useCallback } from "react";
+import {
   Table,
   TableHeader,
   TableColumn,
@@ -10,8 +10,8 @@ import {
   Pagination,
   Input,
   Button,
-  DatePicker
-} from '@nextui-org/react';
+  DatePicker,
+} from "@nextui-org/react";
 import {
   MdAutoFixHigh,
   MdEdit,
@@ -22,7 +22,7 @@ import { PiPencilSimpleFill } from "react-icons/pi";
 import { BsTrash2Fill } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { FaEye } from "react-icons/fa6";
-import { columns } from './columns';
+import { columns } from "./columns";
 
 function EstuTable({
   data,
@@ -40,7 +40,6 @@ function EstuTable({
   eliminar,
   ver,
 }) {
-
   // console.log("DATOS: ", data?.data);
 
   const handleSearch = (value) => {
@@ -55,12 +54,12 @@ function EstuTable({
 
   const topContent = useMemo(() => {
     return (
-      <div className='flex flex-col gap-4'>
+      <div className="flex flex-col gap-4">
         <div className="flex items-end justify-between gap-2">
           <Input
-            className='w-full sm:max-w-[44%]'
+            className="w-full sm:max-w-[44%]"
             label="Buscador"
-            placeholder='Nombres | DNI'
+            placeholder="Nombres | DNI"
             startContent={<CiSearch size="1.4em" />}
             defaultValue={search}
             onChange={(e) => handleSearch(e.target.value)}
@@ -78,7 +77,7 @@ function EstuTable({
                 setEdit(false);
                 onOpen();
               }}
-              color='primary'
+              color="primary"
               endContent={<MdAutoFixHigh size="1.4em" />}
             >
               Añadir
@@ -94,9 +93,9 @@ function EstuTable({
           <label className="flex items-center text-default-400 text-small">
             Filas por página:
             <select
-              className='bg-transparent outline-none text-default-400 text-small'
+              className="bg-transparent outline-none text-default-400 text-small"
               onChange={(e) => {
-                setRowPerPage(e.target.value)
+                setRowPerPage(e.target.value);
               }}
             >
               <option value="5">5</option>
@@ -108,7 +107,7 @@ function EstuTable({
           </label>
         </div>
       </div>
-    )
+    );
   }, [rowPerPage, data?.total]);
 
   const renderCell = useCallback((row, columnKey, index) => {
@@ -116,22 +115,22 @@ function EstuTable({
 
     switch (columnKey) {
       case "id":
-        return <p>{index !== undefined && index !== null ? index + 1 : '-'}</p>;
+        return <p>{index !== undefined && index !== null ? index + 1 : "-"}</p>;
 
       case "dni":
-        return <p className=''>{row.dni}</p>
+        return <p className="">{row.dni}</p>;
 
       case "recibos":
-        return <p className='font-bold'>{row.recibos.length}</p>
-      
+        return <p className="font-bold">{row.recibos.length}</p>;
+
       case "acciones":
         return (
           <div className="relative flex items-center gap-2">
             <Button
               onPress={() => editar(row)}
-              size='sm'
-              color='warning'
-              isIconOnly 
+              size="sm"
+              color="warning"
+              isIconOnly
               variant="ghost"
             >
               <PiPencilSimpleFill size="1.6em" />
@@ -139,18 +138,18 @@ function EstuTable({
 
             <Button
               onPress={() => ver(row)}
-              size='sm'
-              color='success'
-              isIconOnly 
+              size="sm"
+              color="success"
+              isIconOnly
             >
               <FaEye size="1.6em" />
             </Button>
 
             <Button
               onPress={() => eliminar(row)}
-              size='sm'
-              color='danger'
-              isIconOnly 
+              size="sm"
+              color="danger"
+              isIconOnly
             >
               <BsTrash2Fill size="1.6em" />
             </Button>
@@ -163,7 +162,7 @@ function EstuTable({
 
   return (
     <>
-      <span className='text-2xl font-bold'>Estudiantes</span>
+      <span className="text-2xl font-bold">Estudiantes</span>
 
       <Table
         aria-label="Tabla de Estudiantes"
@@ -196,23 +195,18 @@ function EstuTable({
           )}
         </TableHeader>
 
-        <TableBody
-          loadingContent={<Spinner />}
-          loadingState={loadingState}
-        >
+        <TableBody loadingContent={<Spinner />} loadingState={loadingState}>
           {data?.data?.map((item, index) => (
             <TableRow key={item?.id}>
               {(columnKey) => (
-                <TableCell>
-                  {renderCell(item, columnKey, index)}
-                </TableCell>
+                <TableCell>{renderCell(item, columnKey, index)}</TableCell>
               )}
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </>
-  )
+  );
 }
 
-export default EstuTable
+export default EstuTable;

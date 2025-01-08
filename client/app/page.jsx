@@ -1,8 +1,8 @@
 "use client";
 import { title, subtitle } from "@/components/primitives";
 import EstadisticaService from "@/services/EstadisticaService";
-import Estadistica from "@/components/Estadisticas/Estadistica"
-import { fechaHoy } from "@/utils/FechaHoy"
+import Estadistica from "@/components/Estadisticas/Estadistica";
+import { fechaHoy } from "@/utils/FechaHoy";
 import { useState } from "react";
 
 export default function Home() {
@@ -29,17 +29,14 @@ export default function Home() {
         <span className={title()}>Sistema de Ingresos JMM</span>
       </div>
 
-      
-
-        
-        <Estadistica 
-          fecha_sel={fecha_sel}
-          setFecha_sel={setFecha_sel}
-          setAno_sel={setAno_sel}
-          setMes_ano_sel={setMes_ano_sel}
-          data={data}
-          isLoading={isLoading}
-        />
+      <Estadistica
+        fecha_sel={fecha_sel}
+        setFecha_sel={setFecha_sel}
+        setAno_sel={setAno_sel}
+        setMes_ano_sel={setMes_ano_sel}
+        data={data}
+        isLoading={isLoading}
+      />
     </section>
   );
 }

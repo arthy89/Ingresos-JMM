@@ -1,5 +1,5 @@
-import { useRef, useMemo, useCallback } from 'react'
-import { 
+import { useRef, useMemo, useCallback } from "react";
+import {
   Table,
   TableHeader,
   TableColumn,
@@ -10,8 +10,8 @@ import {
   Pagination,
   Input,
   Button,
-  DatePicker
-} from '@nextui-org/react';
+  DatePicker,
+} from "@nextui-org/react";
 import {
   MdAutoFixHigh,
   MdEdit,
@@ -44,7 +44,7 @@ function ConcepsTable({
     { name: "Precio", uid: "precio" },
     { name: "Acciones", uid: "acciones" },
   ];
-  
+
   const handleSearch = (value) => {
     setSearch(value);
   };
@@ -57,12 +57,12 @@ function ConcepsTable({
 
   const topContent = useMemo(() => {
     return (
-      <div className='flex flex-col gap-4'>
+      <div className="flex flex-col gap-4">
         <div className="flex items-end justify-between gap-2">
           <Input
-            className='w-full sm:max-w-[44%]'
+            className="w-full sm:max-w-[44%]"
             label="Buscador"
-            placeholder='Por nombre...'
+            placeholder="Por nombre..."
             startContent={<CiSearch size="1.4em" />}
             defaultValue={search}
             onChange={(e) => handleSearch(e.target.value)}
@@ -74,7 +74,7 @@ function ConcepsTable({
                 setEdit(false);
                 onOpen();
               }}
-              color='primary'
+              color="primary"
               endContent={<MdAutoFixHigh size="1.4em" />}
             >
               Añadir
@@ -90,9 +90,9 @@ function ConcepsTable({
           <label className="flex items-center text-default-400 text-small">
             Filas por página:
             <select
-              className='bg-transparent outline-none text-default-400 text-small'
+              className="bg-transparent outline-none text-default-400 text-small"
               onChange={(e) => {
-                setRowPerPage(e.target.value)
+                setRowPerPage(e.target.value);
               }}
             >
               <option value="5">5</option>
@@ -104,50 +104,50 @@ function ConcepsTable({
           </label>
         </div>
       </div>
-    )
+    );
   }, [rowPerPage, data?.total]);
 
   const renderCell = useCallback((row, columnKey, index) => {
-      const cellValue = row[columnKey];
-  
-      switch (columnKey) {
-        case "id":
-          return <p>{index !== undefined && index !== null ? index + 1 : '-'}</p>;
+    const cellValue = row[columnKey];
 
-        case "precio":
-          return <p>S/. {row.precio}</p>
-        
-        case "acciones":
-          return (
-            <div className="relative flex items-center gap-2">
-              <Button
-                onPress={() => editar(row)}
-                size='sm'
-                color='warning'
-                isIconOnly 
-                variant="ghost"
-              >
-                <PiPencilSimpleFill size="1.6em" />
-              </Button>
-  
-              <Button
-                onPress={() => eliminar(row)}
-                size='sm'
-                color='danger'
-                isIconOnly 
-              >
-                <BsTrash2Fill size="1.6em" />
-              </Button>
-            </div>
-          );
-        default:
-          return cellValue;
-      }
-    }, []);
+    switch (columnKey) {
+      case "id":
+        return <p>{index !== undefined && index !== null ? index + 1 : "-"}</p>;
+
+      case "precio":
+        return <p>S/. {row.precio}</p>;
+
+      case "acciones":
+        return (
+          <div className="relative flex items-center gap-2">
+            <Button
+              onPress={() => editar(row)}
+              size="sm"
+              color="warning"
+              isIconOnly
+              variant="ghost"
+            >
+              <PiPencilSimpleFill size="1.6em" />
+            </Button>
+
+            <Button
+              onPress={() => eliminar(row)}
+              size="sm"
+              color="danger"
+              isIconOnly
+            >
+              <BsTrash2Fill size="1.6em" />
+            </Button>
+          </div>
+        );
+      default:
+        return cellValue;
+    }
+  }, []);
 
   return (
     <>
-      <span className='text-2xl font-bold'>Conceptos</span>
+      <span className="text-2xl font-bold">Conceptos</span>
 
       <Table
         aria-label="Tabla de Estudiantes"
@@ -180,23 +180,18 @@ function ConcepsTable({
           )}
         </TableHeader>
 
-        <TableBody
-          loadingContent={<Spinner />}
-          loadingState={loadingState}
-        >
+        <TableBody loadingContent={<Spinner />} loadingState={loadingState}>
           {data?.data?.map((item, index) => (
             <TableRow key={item?.id}>
               {(columnKey) => (
-                <TableCell>
-                  {renderCell(item, columnKey, index)}
-                </TableCell>
+                <TableCell>{renderCell(item, columnKey, index)}</TableCell>
               )}
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </>
-  )
+  );
 }
 
-export default ConcepsTable
+export default ConcepsTable;

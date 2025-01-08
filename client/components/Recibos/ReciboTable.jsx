@@ -1,5 +1,5 @@
-import { useRef, useMemo, useCallback } from 'react'
-import { 
+import { useRef, useMemo, useCallback } from "react";
+import {
   Table,
   TableHeader,
   TableColumn,
@@ -10,8 +10,8 @@ import {
   Pagination,
   Input,
   Button,
-  DatePicker
-} from '@nextui-org/react';
+  DatePicker,
+} from "@nextui-org/react";
 import {
   MdAutoFixHigh,
   MdEdit,
@@ -22,14 +22,14 @@ import { PiPencilSimpleFill } from "react-icons/pi";
 import { BsTrash2Fill } from "react-icons/bs";
 import { CiSearch } from "react-icons/ci";
 import { BsPrinterFill } from "react-icons/bs";
-import { columns } from './columns';
-import jsPDF from 'jspdf';
+import { columns } from "./columns";
+import jsPDF from "jspdf";
 import "jspdf-autotable";
 // Fuentes
-import { robotoFun } from '@/public/fonts/roboto-normal';
-import { thunderFun } from '@/public/fonts/thunder-normal';
-import { sfboldFun } from '@/public/fonts/sfbold-normal';
-import { cooperFun } from '@/public/fonts/cooper-normal';
+import { robotoFun } from "@/public/fonts/roboto-normal";
+import { thunderFun } from "@/public/fonts/thunder-normal";
+import { sfboldFun } from "@/public/fonts/sfbold-normal";
+import { cooperFun } from "@/public/fonts/cooper-normal";
 
 jsPDF.API.events.push(["addFonts", robotoFun]);
 jsPDF.API.events.push(["addFonts", thunderFun]);
@@ -53,21 +53,20 @@ function ReciboTable({
   onOpen,
   eliminar,
 }) {
-
-
   const handleSearch = (value) => {
     setSearch(value);
   };
 
   const handleFecha = (value) => {
     setFecha(value);
-  }
+  };
 
   const pages = useMemo(() => {
     return recibos?.last_page;
   }, [recibos?.total, rowPerPage]);
 
-  const loadingState = isLoading || recibos?.data.legth === 0 ? "loading" : "idle";
+  const loadingState =
+    isLoading || recibos?.data.legth === 0 ? "loading" : "idle";
 
   // ? PDF
   const pressPdf = (e) => {
@@ -78,8 +77,8 @@ function ReciboTable({
         format: "a4",
       });
 
-      const insignia = "/img/jmm.png"
-      const jec = "/img/jec.png"
+      const insignia = "/img/jmm.png";
+      const jec = "/img/jec.png";
 
       // Obtener las dimensiones de la página (A4 en mm)
       const pageWidth = doc.internal.pageSize.getWidth(); // 297 mm en landscape
@@ -93,26 +92,34 @@ function ReciboTable({
         // Logos
         doc.addImage(insignia, "PNG", 12 + offsetX, 10, 23, 23);
         doc.addImage(jec, "PNG", 110 + offsetX, 10, 30, 20);
-        
+
         //Fuentes
         // sfbold, cooper, times, thunder, roboto
-        
+
         doc.setFont("sfbold");
         doc.setFontSize(12);
-        doc.text("Institución Educativa Secundaria", 75 + offsetX, 15, { align: "center" });
-        
+        doc.text("Institución Educativa Secundaria", 75 + offsetX, 15, {
+          align: "center",
+        });
+
         doc.setFont("cooper");
         doc.setFontSize(15);
-        doc.text(`"JOSÉ MACEDO MENDOZA"`, 75 + offsetX, 22, { align: "center" });
-        
+        doc.text(`"JOSÉ MACEDO MENDOZA"`, 75 + offsetX, 22, {
+          align: "center",
+        });
+
         doc.setFont("times", "bold");
         doc.setFontSize(10);
-        doc.text("Macusani - Carabaya - Puno", 75 + offsetX, 27, { align: "center" });
-        
+        doc.text("Macusani - Carabaya - Puno", 75 + offsetX, 27, {
+          align: "center",
+        });
+
         doc.setFont("thunder", "normal");
         doc.setFontSize(22);
-        doc.text("RECIBO DE INGRESOS PROPIOS", 75 + offsetX, 42, { align: "center" });
-        
+        doc.text("RECIBO DE INGRESOS PROPIOS", 75 + offsetX, 42, {
+          align: "center",
+        });
+
         // Fecha
         const [ano, mes, dia] = e.fecha.split("-");
         doc.setFont("sfbold");
@@ -121,7 +128,7 @@ function ReciboTable({
         doc.text(`${dia}`, 36 + offsetX, 53, { align: "center" });
         doc.text(`${mes}`, 49 + offsetX, 53, { align: "center" });
         doc.text(`${ano}`, 63 + offsetX, 53, { align: "center" });
-        
+
         // Num del Recibo
         doc.setFont("roboto");
         doc.setFontSize(22);
@@ -137,13 +144,7 @@ function ReciboTable({
         doc.text(`${e.senor}`, 42 + offsetX, 62);
 
         // Tabla de Conceptos
-        const columns = [
-          "Nº",
-          "POR CONCEPTO",
-          "PRECIO",
-          "CANT.",
-          "IMPORTE",
-        ];
+        const columns = ["Nº", "POR CONCEPTO", "PRECIO", "CANT.", "IMPORTE"];
 
         const tableData = e.items.map((item, index) => [
           index + 1,
@@ -184,12 +185,15 @@ function ReciboTable({
           doc.text("Sin bservaciones", 20 + offsetX, finalY + 18);
         }
 
-
         // Firma y Sello
         doc.setFont("times", "bold");
-        doc.text("........................................", 40 + offsetX, finalY + 55, { align: "center" });
+        doc.text(
+          "........................................",
+          40 + offsetX,
+          finalY + 55,
+          { align: "center" },
+        );
         doc.text("TESORERÍA", 40 + offsetX, finalY + 60, { align: "center" });
-        
       };
 
       // Dibujar el contenido en ambas mitades
@@ -203,26 +207,26 @@ function ReciboTable({
       const pdfBlob = doc.output("blob");
       const pdfUrl = URL.createObjectURL(pdfBlob);
       window.open(pdfUrl, "_blank");
-    }
+    };
 
     generatePdf();
-  }
+  };
 
   const topContent = useMemo(() => {
     return (
-      <div className='flex flex-col gap-4'>
+      <div className="flex flex-col gap-4">
         <div className="flex items-end justify-between gap-2">
           <Input
-            className='w-full sm:max-w-[44%]'
+            className="w-full sm:max-w-[44%]"
             label="Buscador"
-            placeholder='Nombres | DNI | Num'
+            placeholder="Nombres | DNI | Num"
             startContent={<CiSearch size="1.4em" />}
             defaultValue={search}
             onChange={(e) => handleSearch(e.target.value)}
           />
 
           <DatePicker
-            className="max-w-[284px]" 
+            className="max-w-[284px]"
             label="Por Fecha"
             onChange={(e) => handleFecha(e.year + "-" + e.month + "-" + e.day)}
           />
@@ -233,7 +237,7 @@ function ReciboTable({
                 setEdit(false);
                 onOpen();
               }}
-              color='primary'
+              color="primary"
               endContent={<MdAutoFixHigh size="1.4em" />}
             >
               Añadir
@@ -251,9 +255,9 @@ function ReciboTable({
           <label className="flex items-center text-default-400 text-small">
             Filas por página:
             <select
-              className='bg-transparent outline-none text-default-400 text-small'
+              className="bg-transparent outline-none text-default-400 text-small"
               onChange={(e) => {
-                setRowPerPage(e.target.value)
+                setRowPerPage(e.target.value);
               }}
             >
               <option value="5">5</option>
@@ -273,45 +277,43 @@ function ReciboTable({
 
     switch (columnKey) {
       case "id":
-        return <p>{index !== undefined && index !== null ? index + 1 : '-'}</p>;
-      
+        return <p>{index !== undefined && index !== null ? index + 1 : "-"}</p>;
+
       case "num":
         const num = String(row.num).padStart(6, 0);
-        return <p>{num}</p>
+        return <p>{num}</p>;
 
       case "dni":
-        return <p>{row.estudiante.dni}</p>
+        return <p>{row.estudiante.dni}</p>;
 
       case "estudiante":
         return (
           <>
             <p>{row.estudiante.nombre}</p>
-            <p className='text-xs italic font-light'>Sr(a): {row.senor}</p>
+            <p className="text-xs italic font-light">Sr(a): {row.senor}</p>
           </>
         );
-      
+
       case "items":
         return (
           <ul className="list-disc">
             {row.items.map((item) => (
-              <li key={item.id}>
-                {item.concepto}
-              </li>
+              <li key={item.id}>{item.concepto}</li>
             ))}
           </ul>
         );
 
       case "total":
-        return <p>S/. {row.total}</p>
-      
+        return <p>S/. {row.total}</p>;
+
       case "acciones":
         return (
           <div className="relative flex items-center gap-2">
             <Button
               onPress={() => editar(row)}
-              size='sm'
-              color='warning'
-              isIconOnly 
+              size="sm"
+              color="warning"
+              isIconOnly
               variant="ghost"
             >
               <PiPencilSimpleFill size="1.6em" />
@@ -319,20 +321,20 @@ function ReciboTable({
 
             <Button
               onPress={() => pressPdf(row)}
-              size='sm'
-              color='success'
-              isIconOnly 
+              size="sm"
+              color="success"
+              isIconOnly
             >
-              <BsPrinterFill  size="1.6em" />
+              <BsPrinterFill size="1.6em" />
             </Button>
 
             <Button
               onPress={() => eliminar(row)}
-              size='sm'
-              color='danger'
-              isIconOnly 
+              size="sm"
+              color="danger"
+              isIconOnly
             >
-              <BsTrash2Fill  size="1.6em" />
+              <BsTrash2Fill size="1.6em" />
             </Button>
           </div>
         );
@@ -343,7 +345,7 @@ function ReciboTable({
 
   return (
     <>
-      <span className='text-2xl font-bold'>Recibos</span>
+      <span className="text-2xl font-bold">Recibos</span>
       <Table
         aria-label="Tabla de Recibos"
         topContent={topContent}
@@ -375,23 +377,18 @@ function ReciboTable({
           )}
         </TableHeader>
 
-        <TableBody
-          loadingContent={<Spinner />}
-          loadingState={loadingState}
-        >
+        <TableBody loadingContent={<Spinner />} loadingState={loadingState}>
           {recibos?.data?.map((item, index) => (
             <TableRow key={item?.id}>
               {(columnKey) => (
-                <TableCell>
-                  {renderCell(item, columnKey, index)}
-                </TableCell>
+                <TableCell>{renderCell(item, columnKey, index)}</TableCell>
               )}
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </>
-  )
+  );
 }
 
-export default ReciboTable
+export default ReciboTable;

@@ -1,5 +1,15 @@
-import { Card, CardBody, Spinner, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
-import { useRef, useMemo, useCallback } from 'react'
+import {
+  Card,
+  CardBody,
+  Spinner,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+} from "@nextui-org/react";
+import { useRef, useMemo, useCallback } from "react";
 
 function TablaConceptos({ data, isLoading }) {
   console.log("en la tabla", data);
@@ -16,11 +26,11 @@ function TablaConceptos({ data, isLoading }) {
 
     switch (columnKey) {
       case "id":
-        return <p>{index !== undefined && index !== null ? index + 1 : '-'}</p>;
+        return <p>{index !== undefined && index !== null ? index + 1 : "-"}</p>;
 
       case "total":
-        return <p>S/. {row.total}</p>
-      
+        return <p>S/. {row.total}</p>;
+
       default:
         return cellValue;
     }
@@ -30,12 +40,9 @@ function TablaConceptos({ data, isLoading }) {
 
   return (
     <>
-      <span className='text-xl font-bold'>Tabla de Conceptos</span>
+      <span className="text-xl font-bold">Tabla de Conceptos</span>
 
-      <Table
-        aria-label="Tabla de Conceptos"
-        isStriped
-      >
+      <Table aria-label="Tabla de Conceptos" isStriped>
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn
@@ -55,16 +62,14 @@ function TablaConceptos({ data, isLoading }) {
           {data?.recuento_conceptos?.map((concepto, index) => (
             <TableRow key={index}>
               {(columnKey) => (
-                <TableCell>
-                  {renderCell(concepto, columnKey, index)}
-                </TableCell>
+                <TableCell>{renderCell(concepto, columnKey, index)}</TableCell>
               )}
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </>
-  )
+  );
 }
 
-export default TablaConceptos
+export default TablaConceptos;

@@ -1,19 +1,15 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { 
-  useDisclosure,
-  Modal,
-  ModalContent, 
-} from '@nextui-org/react';
+import { useDisclosure, Modal, ModalContent } from "@nextui-org/react";
 import { useRouter, useParams } from "next/navigation";
-import ReciboTable from '@/components/Recibos/ReciboTable';
-import ReciboService from '@/services/ReciboServices';
-import ConceptoService from '@/services/ConceptoService';
-import EstudianteService from '@/services/EstudianteServices';
-import Eliminar from '@/components/Modals/Eliminar';
-import Form from '@/components/Recibos/form';
+import ReciboTable from "@/components/Recibos/ReciboTable";
+import ReciboService from "@/services/ReciboServices";
+import ConceptoService from "@/services/ConceptoService";
+import EstudianteService from "@/services/EstudianteServices";
+import Eliminar from "@/components/Modals/Eliminar";
+import Form from "@/components/Recibos/form";
 
-function page() {
+function Page() {
   const router = useRouter();
   const params = useParams();
 
@@ -26,7 +22,7 @@ function page() {
 
   const [page, setPage] = useState(1);
   const [rowPerPage, setRowPerPage] = useState(5);
-  const [search, setSearch] = useState("");	
+  const [search, setSearch] = useState("");
   const [fecha, setFecha] = useState(null);
 
   const { data, mutate, isLoading } = ReciboService.getData({
@@ -92,11 +88,17 @@ function page() {
 
   return (
     <>
-      <p className='text-xl font-bold'>Estudiante</p>
-      <p><span className="font-bold">DNI: </span>{est_found_ref.current?.estudiante.dni}</p>
-      <p className="mb-4"><span className="font-bold">Apellidos y Nombres: </span>{est_found_ref.current?.estudiante.nombre}</p>
+      <p className="text-xl font-bold">Estudiante</p>
+      <p>
+        <span className="font-bold">DNI: </span>
+        {est_found_ref.current?.estudiante.dni}
+      </p>
+      <p className="mb-4">
+        <span className="font-bold">Apellidos y Nombres: </span>
+        {est_found_ref.current?.estudiante.nombre}
+      </p>
 
-      <ReciboTable 
+      <ReciboTable
         recibos={data}
         mutate={mutate}
         isLoading={isLoading}
@@ -115,14 +117,14 @@ function page() {
       />
 
       {/* MODALES */}
-      
+
       {/* FORM */}
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         placement="center"
         scrollBehavior="outside"
-        size='lg'
+        size="lg"
       >
         <ModalContent>
           {(onClose) => (
@@ -151,7 +153,7 @@ function page() {
         onClose={onClose}
       />
     </>
-  )
+  );
 }
 
-export default page
+export default Page;

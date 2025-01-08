@@ -4,18 +4,28 @@ export const generar_meses = () => {
   const currentDate = new Date(); // Fecha actual
   const currentYear = currentDate.getFullYear(); // Año actual
   const currentMonth = currentDate.getMonth() + 1; // Mes actual (0-indexado, por eso +1)
-  
+
   const months = [
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
   ];
-  
+
   const result = [];
-  
+
   for (let year = startYear; year <= currentYear; year++) {
     for (let month = 1; month <= 12; month++) {
       if (year === currentYear && month > currentMonth) break; // Detenerse al mes actual
-      
+
       const formattedMonth = month.toString().padStart(2, "0"); // Formatear el mes a 2 dígitos
       result.push({
         mes: `${months[month - 1]} - ${year}`, // Nombre del mes y año
@@ -23,7 +33,7 @@ export const generar_meses = () => {
       });
     }
   }
-  
+
   return result;
 };
 

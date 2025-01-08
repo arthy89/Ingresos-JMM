@@ -5,4 +5,4 @@ export const formData = {
 
   dni: "",
   nombre: "",
-}
+};

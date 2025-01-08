@@ -1,4 +1,4 @@
-import { fechaHoy } from "@/utils/FechaHoy"
+import { fechaHoy } from "@/utils/FechaHoy";
 
 export const formData = {
   id: null,
@@ -16,4 +16,4 @@ export const formData = {
     dni: "",
     nombre: "",
   },
-}
+};

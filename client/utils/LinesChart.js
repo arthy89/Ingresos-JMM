@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
   Filler,
-} from 'chart.js';
+} from "chart.js";
 import { useEffect, useState } from "react";
 
 ChartJS.register(
@@ -24,7 +24,7 @@ ChartJS.register(
 );
 
 export default function LinesChart({ data }) {
-  console.log('dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', data?.recuento_anual)
+  console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", data?.recuento_anual);
 
   const [meses, setMeses] = useState([]);
   const [valores, setValores] = useState([]);
@@ -44,22 +44,20 @@ export default function LinesChart({ data }) {
     labels: meses,
     datasets: [
       {
-        label: 'Beneficios',
+        label: "Beneficios",
         data: valores,
         tension: 0.5,
         fill: true,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgb(255, 99, 132, 0.5)',
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgb(255, 99, 132, 0.5)",
         pointRadius: 5,
-        pointBorderColor: 'rgb(255, 99, 132)',
-        pointBackgroundColor: 'rgb(255, 99, 132)',
+        pointBorderColor: "rgb(255, 99, 132)",
+        pointBackgroundColor: "rgb(255, 99, 132)",
       },
     ],
   };
 
-  var misoptions = {
+  var misoptions = {};
 
-  };
-
-  return <Line data={midata} options={misoptions} />
+  return <Line data={midata} options={misoptions} />;
 }

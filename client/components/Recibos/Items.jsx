@@ -1,4 +1,4 @@
-import { use, useEffect, useRef, useState } from 'react'
+import { use, useEffect, useRef, useState } from "react";
 import {
   Button,
   Input,
@@ -16,12 +16,11 @@ import {
   Chip,
 } from "@nextui-org/react";
 import toast, { Toaster } from "react-hot-toast";
-import { FaPlus  } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { LuBadgeInfo } from "react-icons/lu";
 
 function Items({ form, conceptos, certificado }) {
-  
   const [key, setKey] = useState(0); // Para controlar el Select
   const [item, setItem] = useState({
     concepto: "",
@@ -31,8 +30,12 @@ function Items({ form, conceptos, certificado }) {
   });
 
   const handle_sel_concepto = (value) => {
-    const concpEncontrado = conceptos.find((concepto) => concepto.id === Number(value));
-    const hay_certificado = concpEncontrado.nombre.toLowerCase().includes('certificado de estudios');
+    const concpEncontrado = conceptos.find(
+      (concepto) => concepto.id === Number(value),
+    );
+    const hay_certificado = concpEncontrado.nombre
+      .toLowerCase()
+      .includes("certificado de estudios");
 
     // Comprobar si el Est ya tiene 'certificado = true'
     // y si el concepto seleccionado es 'certificado de estudios'
@@ -40,7 +43,7 @@ function Items({ form, conceptos, certificado }) {
       setItem({
         ...item,
         concepto: concpEncontrado.nombre,
-        precio: concpEncontrado.precio/2,
+        precio: concpEncontrado.precio / 2,
       });
     } else {
       setItem({
@@ -49,12 +52,10 @@ function Items({ form, conceptos, certificado }) {
         precio: concpEncontrado.precio,
       });
     }
-
   };
 
   const agregar = () => {
     if (item.concepto !== "" && item.cantidad !== "") {
-
       // Se calcula el resultado del importe, se procesa antes de agregar al FormData
       const nuevo_item = {
         ...item,
@@ -68,8 +69,8 @@ function Items({ form, conceptos, certificado }) {
       form.setData("total", parseFloat(form.data.total) + nuevo_item.importe);
 
       // console.log("TOTAAAAAA", form.data.total)
-      // console.log("CERRRRRRRRRRRRR", certificado) 
-  
+      // console.log("CERRRRRRRRRRRRR", certificado)
+
       setKey((prevKey) => prevKey + 1); // Forzar el re-renderizado del Select
       setItem({
         concepto: "",
@@ -77,7 +78,6 @@ function Items({ form, conceptos, certificado }) {
         precio: "",
         importe: "",
       });
-
     } else if (item.concepto === "") {
       showToast("Seleccione el Concepto", "error");
     } else if (item.cantidad === "") {
@@ -90,12 +90,12 @@ function Items({ form, conceptos, certificado }) {
     const itemDel = items[index];
     // Filtrar el array para eliminar el item en el índice especificado
     const updatedItem = items.filter((_, i) => i !== index);
-    
+
     // Actualizar los datos
     form.setData("items", updatedItem);
     // Actualizar el Total
     form.setData("total", parseFloat(form.data.total) - itemDel.importe);
-  }
+  };
 
   // * TOAST
   const showToast = (message, type = "success") => {
@@ -113,9 +113,9 @@ function Items({ form, conceptos, certificado }) {
   return (
     <>
       <Select
-        size='sm'
-        variant='bordered'
-        label='Conceptos'
+        size="sm"
+        variant="bordered"
+        label="Conceptos"
         labelPlacement="outside"
         placeholder="Seleccionar..."
         value={item.concepto}
@@ -131,49 +131,51 @@ function Items({ form, conceptos, certificado }) {
           </SelectItem>
         ))}
       </Select>
-      
-      <div className='grid items-end grid-cols-3 gap-4'>
+
+      <div className="grid items-end grid-cols-3 gap-4">
         <Input
           label="Precio U."
-          placeholder='S/. ...'
-          size='sm'
+          placeholder="S/. ..."
+          size="sm"
           // isReadOnly
-          labelPlacement='outside'
-          type='number'
-          variant='bordered'
+          labelPlacement="outside"
+          type="number"
+          variant="bordered"
           value={item.precio}
           onChange={(e) => setItem({ ...item, ["precio"]: e.target.value })}
         />
 
         <Input
           label="Cantidad"
-          placeholder='...'
-          size='sm'
-          labelPlacement='outside'
-          type='number'
-          variant='bordered'
+          placeholder="..."
+          size="sm"
+          labelPlacement="outside"
+          type="number"
+          variant="bordered"
           value={item.cantidad}
           onChange={(e) => setItem({ ...item, ["cantidad"]: e.target.value })}
         />
 
         <Button
-          color='primary'
+          color="primary"
           startContent={<FaPlus />}
-          size='sm'
+          size="sm"
           onPress={agregar}
         >
           Agregar
         </Button>
       </div>
 
-      <span className='text-sm text-success'>Listado</span>
+      <span className="text-sm text-success">Listado</span>
 
-      {(certificado && (
-        <span className='flex gap-1 text-xs italic font-light'><LuBadgeInfo  size="1.2em" /> Descuento de Certificado</span>
-      ))}
+      {certificado && (
+        <span className="flex gap-1 text-xs italic font-light">
+          <LuBadgeInfo size="1.2em" /> Descuento de Certificado
+        </span>
+      )}
 
       {/* Tabla de Lista de Items */}
-      <Table className='' isStriped removeWrapper aria-label="table-temporal">
+      <Table className="" isStriped removeWrapper aria-label="table-temporal">
         <TableHeader>
           <TableColumn>Nº</TableColumn>
           <TableColumn>Concepto</TableColumn>
@@ -186,17 +188,19 @@ function Items({ form, conceptos, certificado }) {
         <TableBody emptyContent={"Sin Items"}>
           {(form.data.items || []).map((itm, index) => (
             <TableRow key={index}>
-              <TableCell className='text-xs'>{index + 1}</TableCell>
-              <TableCell className='text-xs'>{itm.concepto}</TableCell>
-              <TableCell className='text-xs'>S/. {itm.precio}</TableCell>
-              <TableCell className='text-xs text-center'>{itm.cantidad}</TableCell>
-              <TableCell className='text-xs'>S/. {itm.importe}</TableCell>
+              <TableCell className="text-xs">{index + 1}</TableCell>
+              <TableCell className="text-xs">{itm.concepto}</TableCell>
+              <TableCell className="text-xs">S/. {itm.precio}</TableCell>
+              <TableCell className="text-xs text-center">
+                {itm.cantidad}
+              </TableCell>
+              <TableCell className="text-xs">S/. {itm.importe}</TableCell>
               <TableCell>
                 <Button
                   onPress={() => quitar(index)}
-                  size='sm'
-                  color='danger'
-                  isIconOnly 
+                  size="sm"
+                  color="danger"
+                  isIconOnly
                 >
                   <MdDelete />
                 </Button>
@@ -206,17 +210,14 @@ function Items({ form, conceptos, certificado }) {
         </TableBody>
       </Table>
 
-      <div className='flex justify-end'>
-        <Chip color='danger'>
-          <span className='font-medium'>Total:</span> S/.
-          {(form.data.total !== 0 
-            ? " " + form.data.total
-            : " 0.00"
-          )}
+      <div className="flex justify-end">
+        <Chip color="danger">
+          <span className="font-medium">Total:</span> S/.
+          {form.data.total !== 0 ? " " + form.data.total : " 0.00"}
         </Chip>
       </div>
     </>
-  )
+  );
 }
 
 export default Items;

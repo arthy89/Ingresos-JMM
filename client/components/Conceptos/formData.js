@@ -3,4 +3,4 @@ export const formData = {
 
   nombre: "",
   precio: "",
-}
+};

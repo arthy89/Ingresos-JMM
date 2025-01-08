@@ -17,17 +17,21 @@ function Eliminar({ datos, isOpen, onOpenChange, delReg }) {
             <>
               {datos && (
                 <>
-                  <ModalHeader>
-                    Eliminar
-                  </ModalHeader>
+                  <ModalHeader>Eliminar</ModalHeader>
 
                   <ModalBody>
                     <p>
                       ¿Seguro de eliminar{" "}
-                      {datos.num
-                        ? <span>el Recibo <strong>Nº {String(datos.num).padStart(6, 0)}</strong></span>
-                        : <span><strong>{datos.nombre}</strong></span>
-                      }
+                      {datos.num ? (
+                        <span>
+                          el Recibo{" "}
+                          <strong>Nº {String(datos.num).padStart(6, 0)}</strong>
+                        </span>
+                      ) : (
+                        <span>
+                          <strong>{datos.nombre}</strong>
+                        </span>
+                      )}
                     </p>
                   </ModalBody>
 
@@ -41,7 +45,7 @@ function Eliminar({ datos, isOpen, onOpenChange, delReg }) {
                         delReg(datos.id);
                       }}
                     >
-                      <BsTrash2Fill  size="1.6em" /> Eliminar
+                      <BsTrash2Fill size="1.6em" /> Eliminar
                     </Button>
                   </ModalFooter>
                 </>
