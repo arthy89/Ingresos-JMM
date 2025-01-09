@@ -16,11 +16,15 @@ function SelectComponent({
 
   // console.log("FECHAAAAAAAAAAAAAAAAAAAAA", fecha_sel);
   const fecha = (fechaString) => {
+    if (!fechaString) return null; // Si fechaString es null o undefined, retorna null directamente
+  
     const [year, month, day] = fechaString.split("-").map(Number);
-
+  
     if (year !== 0) {
       return new CalendarDate(year, month, day);
     }
+  
+    return null; // En caso de que year sea 0 o no válido
   };
 
   const handle_fecha = (e) => {

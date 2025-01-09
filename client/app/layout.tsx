@@ -15,9 +15,12 @@ export const metadata: Metadata = {
     template: `%s - ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  manifest: "/manifest.json",
   icons: {
     icon: "/favicon.ico",
+    // apple: "/img/icon.png"
   },
+  // themeColor: "#ff0000"
 };
 
 export const viewport: Viewport = {
@@ -54,8 +57,8 @@ export default function RootLayout({
                 href="https://nextui-docs-v2.vercel.app?utm_source=next-app-template"
                 title="nextui.org homepage"
               >
-                <span className="text-default-600">Powered by</span>
-                <p className="text-primary">NextUI</p>
+                {/* <span className="text-default-600">Powered by</span>
+                <p className="text-primary">NextUI</p> */}
               </Link>
             </footer>
           </div>

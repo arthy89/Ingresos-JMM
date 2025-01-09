@@ -2,7 +2,7 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "Ingresos JMM",
-  description: "Make beautiful websites regardless of your design experience.",
+  description: "Aplicación de Ingresos Propios de la IES JMM",
   navItems: [
     {
       label: "Inicio",
