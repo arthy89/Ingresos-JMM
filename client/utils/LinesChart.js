@@ -24,7 +24,7 @@ ChartJS.register(
 );
 
 export default function LinesChart({ data }) {
-  console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", data?.recuento_anual);
+  // console.log("dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", data?.recuento_anual);
 
   const [meses, setMeses] = useState([]);
   const [valores, setValores] = useState([]);

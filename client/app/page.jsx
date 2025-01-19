@@ -18,10 +18,10 @@ export default function Home() {
 
   // console.log("fechaaaaaa", fechaHoy())
 
-  console.log("dataaaaaaaa", data);
+  // console.log("dataaaaaaaa", data);
 
-  console.log("fechaseeeeeeeeeeel", fecha_sel);
-  console.log("MESSSSS SEL", mes_ano_sel);
+  // console.log("fechaseeeeeeeeeeel", fecha_sel);
+  // console.log("MESSSSS SEL", mes_ano_sel);
 
   return (
     <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-1">

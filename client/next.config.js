@@ -8,7 +8,7 @@ const withPWA = require("next-pwa")({
 const nextConfig = withPWA({
   output: "standalone", // Configuración existente para standalone
   reactStrictMode: true, // Opción recomendada para React
-  swcMinify: true, // Minificación para mejorar el rendimiento
+  // swcMinify: true, // Minificación para mejorar el rendimiento
 });
 
 module.exports = nextConfig;

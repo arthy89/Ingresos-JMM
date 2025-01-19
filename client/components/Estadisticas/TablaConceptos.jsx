@@ -12,7 +12,7 @@ import {
 import { useRef, useMemo, useCallback } from "react";
 
 function TablaConceptos({ data, isLoading }) {
-  console.log("en la tabla", data);
+  // console.log("en la tabla", data);
 
   const columns = [
     { name: "Nº", uid: "id" },

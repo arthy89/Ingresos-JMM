@@ -70,6 +70,7 @@ function ReciboTable({
 
   // ? PDF
   const pressPdf = (e) => {
+    console.log(e);
     const generatePdf = () => {
       const doc = new jsPDF({
         orientation: "landscape",
@@ -136,12 +137,25 @@ function ReciboTable({
         doc.text(`Nº ${String(e.num).padStart(6, 0)}`, 80 + offsetX, 52);
         doc.setTextColor(0, 0, 0);
 
+        // Estudiante
+        doc.setFont("sfbold");
+        doc.setFontSize(12);
+        doc.text("Estudiante", 19.5 + offsetX, 62);
+        doc.text("DNI: ", 19.5 + offsetX, 67);
+        doc.setFont("roboto");
+        doc.text(`${e.estudiante.dni}`, 29 + offsetX, 67);
+        doc.setFont("sfbold");
+        doc.text("Nombre: ", 19.5 + offsetX, 71.5);
+        doc.setFont("roboto");
+        doc.text(`${e.estudiante.nombre}`, 38 + offsetX, 71.5);
+        
+
         // Nombre del Senor
         doc.setFont("sfbold");
         doc.setFontSize(12);
-        doc.text("Señor(es): ", 30 + offsetX, 62, { align: "center" });
+        doc.text("Señor(es): ", 30 + offsetX, 80, { align: "center" });
         doc.setFont("roboto");
-        doc.text(`${e.senor}`, 42 + offsetX, 62);
+        doc.text(`${e.senor}`, 42 + offsetX, 80);
 
         // Tabla de Conceptos
         const columns = ["Nº", "POR CONCEPTO", "PRECIO", "CANT.", "IMPORTE"];
@@ -157,7 +171,7 @@ function ReciboTable({
         doc.autoTable({
           head: [columns],
           body: tableData,
-          startY: 65, // Comienzo de la tabla (ajusta según necesites)
+          startY: 83, // Comienzo de la tabla (ajusta según necesites)
           margin: { left: offsetX + 10 }, // Ajusta la posición en la mitad izquierda o derecha
           tableWidth: mitadAncho - 20, // Limita el ancho de la tabla a la mitad de la hoja
           styles: { fontSize: 10 }, // Estilo general de la tabla

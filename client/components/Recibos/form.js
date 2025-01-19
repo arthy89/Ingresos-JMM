@@ -20,8 +20,10 @@ import EstudianteService from "@/services/EstudianteServices";
 const Form = forwardRef(
   ({ save, isEdit, id, onClose, ult, conceptos, est_data }, ref) => {
     useEffect(() => {
-      if (!isEdit) {
+      if (!isEdit && ult) {
         form.setData("num", ult.num + 1);
+      } else {
+        form.setData("num", 1);
       }
     }, [isEdit, ult]);
 

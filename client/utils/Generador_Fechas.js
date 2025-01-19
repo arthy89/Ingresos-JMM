@@ -1,5 +1,5 @@
 export const generar_meses = () => {
-  const startYear = 2024; // Año de inicio
+  const startYear = 2025; // Año de inicio
   const startMonth = 1; // Mes de inicio (Enero)
   const currentDate = new Date(); // Fecha actual
   const currentYear = currentDate.getFullYear(); // Año actual
@@ -34,11 +34,11 @@ export const generar_meses = () => {
     }
   }
 
-  return result;
+  return result.reverse();
 };
 
 export const generar_ano = () => {
-  const startYear = 2024; // Año de inicio
+  const startYear = 2025; // Año de inicio
   const currentYear = new Date().getFullYear(); // Año actual
   const result = [];
 
@@ -49,7 +49,7 @@ export const generar_ano = () => {
     });
   }
 
-  return result;
+  return result.reverse();
 };
 
 // Uso de la función
