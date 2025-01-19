@@ -1,0 +1,3 @@
+copiar sn.vbs en shell:startup
+
+cambiar la ruta de WshShell.Run "cmd.exe /c C:\{ruta}\sn.bat", 0, False
